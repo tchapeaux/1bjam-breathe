@@ -15,6 +15,7 @@
 <script type="text/javascript" src="js/game.js"></script>
 <script type="text/javascript" src="js/breathing.js"></script>
 <script type="text/javascript" src="js/tutorial.js"></script>
+<script type="text/javascript" src="js/touch_converter.js"></script>
 
 <div id="gameId">
 
@@ -41,8 +42,9 @@
         keysPressed.delete(e.keyCode);
     }
 
-    var kMAX_LAG = 0.1; // maximal duration sent to the simulation at each frame
+    touch2mouse(gameCanvas);
 
+    var kMAX_LAG = 0.1; // maximal duration sent to the simulation at each frame
     var oldTimestamp = Date.now();
     function step(timestamp) {
         var ds = (timestamp - oldTimestamp) / 1000;
