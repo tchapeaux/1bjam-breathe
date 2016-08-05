@@ -5,8 +5,7 @@ function convertTouchEvent(ev) {
     ev.preventDefault();
     switch (ev.type) {
     case 'touchstart':
-        alert("start");
-        keyDown(66);
+        keyDown({keycode: 66});
         break;
     case 'touchend':
         // Make sure only one finger is lifted from the target
@@ -14,7 +13,7 @@ function convertTouchEvent(ev) {
         if (ev.changedTouches.length != 1) {
             return;
         }
-        keyUp(66);
+        keyUp({keycode: 66});
         break;
     default:
         return;
