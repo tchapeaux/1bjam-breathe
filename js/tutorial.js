@@ -71,11 +71,11 @@ Tutorial.prototype.draw = function(ctx) {
             text = "Release";
         } else {
             ctx.fillStyle = "white";
-            text = "Press";
+            text = "Hold";
         }
 
         ctx.font = "75px";
-        ctx.fillText(text, 0, 0);
+        ctx.fillText(text, 0, 3);
     }
     if (this.state == Tutorial.states.WITHOUT_INSTR) {
         var text = "KEEP GOING"
