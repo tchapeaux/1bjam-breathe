@@ -21,6 +21,14 @@ var Breathing = function() {
     this.timing_inconfort_step = 0.3;
     this.timing_inconfort_out_speed = 0.1;
 
+    this.snd_breath_i = new Howl({
+        src: ['res/breath_in2.ogg']
+    });
+
+    this.snd_breath_o = new Howl({
+        src: ['res/breath_out.ogg']
+    });
+
 };
 
 Breathing.states = {
@@ -32,6 +40,7 @@ Breathing.prototype.update = function(ds, keysPressed) {
     // breathe with button
     if (keysPressed.has(66) /* B */) {
         if (this.state == Breathing.states.OUT) {
+            this.snd_breath_i.play();
             this.state = Breathing.states.IN;
             if (this.current > this.threshold_can_press) {
                 this.timing_inconfort += this.timing_inconfort_step;
@@ -40,6 +49,7 @@ Breathing.prototype.update = function(ds, keysPressed) {
         this.current += this.in_speed * ds;
     } else {
         if (this.state == Breathing.states.IN) {
+            this.snd_breath_o.play();
             this.state = Breathing.states.OUT;
             if (this.current < this.threshold_can_release) {
                 this.timing_inconfort += this.timing_inconfort_step;
