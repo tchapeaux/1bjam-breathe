@@ -27,12 +27,12 @@ Tutorial.prototype.update = function(ds) {
             console.log("WITHOUT NOW");
             this.state = Tutorial.states.WITHOUT_INSTR
         } else if (this.with_instr_empty_cnt < this.with_instr_full_cnt) {
-            if (game.breathing.current_breath <= 0) {
+            if (game.breathing.current <= 0) {
                 this.with_instr_empty_cnt += 1;
                 console.log("ONE EMPTY");
             }
         } else {
-            if (game.breathing.current_breath >= 1) {
+            if (game.breathing.current >= 1) {
                 this.with_instr_full_cnt += 1;
                 console.log("ONE FULL");
             }
@@ -42,12 +42,12 @@ Tutorial.prototype.update = function(ds) {
             console.log("ENDING NOW");
             this.state = Tutorial.states.ENDING;
         } else if (this.without_instr_empty_cnt < this.without_instr_full_cnt) {
-            if (game.breathing.current_breath <= 0) {
+            if (game.breathing.current <= 0) {
                 this.without_instr_empty_cnt += 1;
                 console.log("ONE EMPTY", this);
             }
         } else {
-            if (game.breathing.current_breath >= 1) {
+            if (game.breathing.current >= 1) {
                 this.without_instr_full_cnt += 1;
                 console.log("ONE FULL", this);
             }
