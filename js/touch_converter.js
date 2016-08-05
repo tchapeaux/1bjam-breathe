@@ -5,6 +5,7 @@ function convertTouchEvent(ev) {
     ev.preventDefault();
     switch (ev.type) {
     case 'touchstart':
+        alert("start");
         keyDown(66);
         break;
     case 'touchend':
