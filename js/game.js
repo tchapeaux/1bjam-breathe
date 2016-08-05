@@ -8,7 +8,7 @@ var Game = function() {
     this.state = Game.states.STARTING;
 
     this.breathing = new Breathing();
-    this.tutorial = new Tutorial(this);
+    this.tutorial = new Tutorial();
 
     this.state = Game.states.TUTORIAL;
 };
