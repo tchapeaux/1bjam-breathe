@@ -6,7 +6,6 @@ function scrMinSize() {
 
 var Game = function() {
     this.state = Game.states.STARTING;
-
     this.breathing = new Breathing();
     this.tutorial = new Tutorial();
 
