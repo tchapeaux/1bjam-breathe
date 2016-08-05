@@ -1,0 +1,97 @@
+<!doctype html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <!-- <link rel=icon href="img/favicon.png"> -->
+    <!-- <link rel="apple-touch-icon-precomposed" href="img/favicon_apple.png"> -->
+    <title>B R E A T H E</title>
+</head>
+
+<body onload="RESOURCES_ONLOAD()">
+
+<h1>Breathe</h1>
+
+<!-- Load js files -->
+<script type="text/javascript" src="js/game.js"></script>
+<script type="text/javascript" src="js/tutorial.js"></script>
+
+<div id="gameId">
+
+    <canvas id="gameCanvas" width ="400" height="200"></canvas>
+    <script type="text/javascript">
+    "use strict";
+
+    var LOADING_RESOURCES = true;
+
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.oRequestAnimationFrame;
+
+    var gameCanvas = document.getElementById("gameCanvas");
+    function wScr() { return gameCanvas.width; }
+    function hScr() { return gameCanvas.height; }
+    var game = new Game();
+
+    var keysPressed = new Set();
+    window.addEventListener('keydown', this.keyDown, false);
+    window.addEventListener('keyup', this.keyUp, false);
+    function keyDown(e) {
+        keysPressed.add(e.keyCode);
+    }
+    function keyUp(e) {
+        keysPressed.delete(e.keyCode);
+    }
+
+    var kMAX_LAG = 0.1; // maximal duration sent to the simulation at each frame
+
+    var oldTimestamp = Date.now();
+    function step(timestamp) {
+        var ds = (timestamp - oldTimestamp) / 1000;
+        ds = Math.max(0, ds);
+        ds = Math.min(ds, kMAX_LAG);
+
+        var ctx = gameCanvas.getContext("2d");
+
+        ctx.save();
+
+        if (LOADING_RESOURCES) {
+            ctx.textAlign = "center";
+            ctx.fillStyle = "white";
+            ctx.font = "75px Arial";
+        } else {
+            game.update(ds, keysPressed);
+            ctx.translate(gameCanvas.width / 2, gameCanvas.height / 2);
+            game.draw(ctx);
+        }
+
+        ctx.restore();
+
+        requestAnimationFrame(step);
+        oldTimestamp = timestamp;
+    }
+
+    requestAnimationFrame(step);
+
+    function RESOURCES_ONLOAD() {
+
+        LOADING_RESOURCES = false;
+        console.log("Resource load : OK");
+    }
+    </script>
+
+
+
+</div>
+
+<div id="subtitles_box">
+    <input type="checkbox" id="subtitles_toggle"/> Subtitles? <input type="checkbox" id="hide_sub_toggle"> Hide?<br/>
+    <input type="text" id="subtitles_text" size="60"/>
+
+    <script type="text/javascript">
+        hide_sub_toggle.onchange = function() {
+            subtitles_box.style.visibility = "hidden";
+        }
+    </script>
+
+
+</div>
+
+</body>
