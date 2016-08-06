@@ -1,3 +1,7 @@
-"Rain on Windows, Interior, A.wav" by InspectorJ of Freesound.org
-"Dry thunder2.wav" by juskiddink of Freesound.org
-"Breathing" by viznoman of Freesound.org
+# From Freesound.org
+
+"Rain on Windows, Interior, A.wav" by InspectorJ
+"Dry thunder2.wav" by juskiddink
+"Breathing" by viznoman
+"Cough4" by Fratz
+"Coughing" by sjnewton
