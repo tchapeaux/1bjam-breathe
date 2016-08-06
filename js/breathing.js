@@ -41,6 +41,7 @@ Breathing.prototype.update = function(ds, keysPressed) {
     if (keysPressed.has(66) /* B */) {
         if (this.state == Breathing.states.OUT) {
             this.snd_breath_i.play();
+            this.snd_breath_o.stop();
             this.state = Breathing.states.IN;
             if (this.current > this.threshold_can_press) {
                 this.timing_discomfort += this.timing_discomfort_step;
@@ -50,6 +51,7 @@ Breathing.prototype.update = function(ds, keysPressed) {
     } else {
         if (this.state == Breathing.states.IN) {
             this.snd_breath_o.play();
+            this.snd_breath_i.stop();
             this.state = Breathing.states.OUT;
             if (this.current < this.threshold_can_release) {
                 this.timing_discomfort += this.timing_discomfort_step;
@@ -84,8 +86,9 @@ Breathing.prototype.update = function(ds, keysPressed) {
 Breathing.prototype.draw = function(ctx) {
     // helper circle outline
     ctx.beginPath();
+    ctx.lineWidth = 2;
     ctx.strokeStyle = "rgb(230,230,230)";
-    ctx.arc(0, 0, 0.9 * scrMinSize() / 2, 0, 2 * Math.PI);
+    ctx.arc(0, 0, 0.7 * scrMinSize() / 2, 0, 2 * Math.PI);
     ctx.stroke();
 
     // helper circle jauge
@@ -94,13 +97,16 @@ Breathing.prototype.draw = function(ctx) {
     ctx.globalAlpha = 0.5 + factor / 2;
     ctx.beginPath();
     ctx.fillStyle = "white";
-    ctx.arc(0, 0, factor * 0.9 * scrMinSize() / 2, 0, 2 * Math.PI);
+    ctx.arc(0, 0, factor * 0.7 * scrMinSize() / 2, 0, 2 * Math.PI);
     ctx.fill();
     ctx.globalAlpha = save_glob_alpha;
     // hyperventilation stroke
     if (factor > 1) {
         ctx.lineWidth = 3;
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "green";
+        if (factor > 1.1) {
+            ctx.strokeStyle = "red";
+        }
         ctx.stroke();
     }
 
