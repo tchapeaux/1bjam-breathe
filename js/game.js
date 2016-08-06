@@ -34,10 +34,5 @@ Game.prototype.draw = function(ctx) {
     ctx.clearRect(-wScr() / 2,-hScr() / 2,wScr(), hScr());
 
     this.breathing.draw(ctx);
-
-    if (this.state === Game.states.TUTORIAL) {
-        this.tutorial.draw(ctx);
-    }
-
 };
 
