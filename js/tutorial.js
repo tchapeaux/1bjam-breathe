@@ -47,6 +47,7 @@ Tutorial.prototype.update = function(ds) {
         if (this.without_instr_empty_cnt >= 3) {
             console.log("ENDING NOW");
             this.state = Tutorial.states.ENDING;
+            game.weather.start();
         } else if (this.without_instr_empty_cnt < this.without_instr_full_cnt) {
             if (game.breathing.current <= game.breathing.threshold_can_press) {
                 this.without_instr_empty_cnt += 1;
