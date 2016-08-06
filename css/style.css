@@ -8,11 +8,10 @@ body {
 	margin: 0;
     color: white;
     height: 100vh;
-    background: rgb(144,87,66);
-    background: -moz-linear-gradient(-45deg, rgba(144,87,66,1) 0%, rgba(94,69,82,1) 50%, rgba(63,121,160,1) 100%);
-    background: -webkit-linear-gradient(-45deg, rgba(144,87,66,1) 0%,rgba(94,69,82,1) 50%,rgba(63,121,160,1) 100%);
-    background: linear-gradient(135deg, rgba(144,87,66,1) 0%,rgba(94,69,82,1) 50%,rgba(63,121,160,1) 100%);
-    background-repeat: no-repeat;
+	background: rgb(170,166,139); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(170,166,139,1) 0%, rgba(72,99,118,1) 49%, rgba(23,50,69,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(170,166,139,1) 0%,rgba(72,99,118,1) 49%,rgba(23,50,69,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(170,166,139,1) 0%,rgba(72,99,118,1) 49%,rgba(23,50,69,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */    background-repeat: no-repeat;
     font-family: "Raleway", serif;
     font-weight: 200;
 }
@@ -25,11 +24,6 @@ h1{
 	background-repeat: no-repeat;
 	background-size: 100%;
 	display: block;
-	font-family: "Raleway";
-	font-weight: 100;
-	text-transform: uppercase;
-	letter-spacing: 15px;
-	text-align: center;
 	margin: 4vw auto 2vw auto;
 	text-indent: -9999px;
 }
