@@ -31,11 +31,7 @@ Game.prototype.update = function(ds, keysPressed) {
 };
 
 Game.prototype.draw = function(ctx) {
-    // blackness
-    ctx.beginPath();
-    ctx.fillStyle = "black";
-    ctx.rect(-wScr() / 2, -hScr() / 2, wScr(), hScr());
-    ctx.fill();
+    ctx.clearRect(-wScr() / 2,-hScr() / 2,wScr(), hScr());
 
     this.breathing.draw(ctx);
 

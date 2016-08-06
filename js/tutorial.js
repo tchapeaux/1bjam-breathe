@@ -64,29 +64,28 @@ Tutorial.prototype.update = function(ds) {
 
 Tutorial.prototype.draw = function(ctx) {
     ctx.textAlign = "center";
+    ctx.font = "normal normal 400 20px Raleway";
     if (this.state == Tutorial.states.WITH_INSTR
         || this.state == Tutorial.states.STARTING) {
         var text = ""
         if (this.with_instr_empty_cnt < this.with_instr_full_cnt) {
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "#383838";
             text = "Release";
         } else {
             ctx.fillStyle = "white";
             text = "Hold";
         }
 
-        ctx.font = "75px";
-        ctx.fillText(text, 0, 3);
+        ctx.fillText(text, 0, 10);
     }
     if (this.state == Tutorial.states.WITHOUT_INSTR) {
         var text = "KEEP GOING"
         ctx.fillStyle = "rgb(200, 200, 200)";
 
-        ctx.font = "75px";
         ctx.fillStyle = "white";
-        ctx.fillText(text, -20, -10);
-        ctx.fillStyle = "black";
-        ctx.fillText(text, 20, 10);
+        ctx.fillText(text, -10, -5);
+        ctx.fillStyle = "#383838";
+        ctx.fillText(text, 10, 5);
     }
 }
 
