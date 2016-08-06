@@ -1,4 +1,74 @@
+@import 'https://fonts.googleapis.com/css?family=Raleway:100,100i,200i,300i,400i';
+
+html{
+	overflow: hidden;
+}
+
 body {
+	margin: 0;
     color: white;
-    background-color: black;
+    height: 100vh;
+    background: rgb(144,87,66);
+    background: -moz-linear-gradient(-45deg, rgba(144,87,66,1) 0%, rgba(94,69,82,1) 50%, rgba(63,121,160,1) 100%);
+    background: -webkit-linear-gradient(-45deg, rgba(144,87,66,1) 0%,rgba(94,69,82,1) 50%,rgba(63,121,160,1) 100%);
+    background: linear-gradient(135deg, rgba(144,87,66,1) 0%,rgba(94,69,82,1) 50%,rgba(63,121,160,1) 100%);
+    background-repeat: no-repeat;
+    font-family: "Raleway", serif;
+    font-weight: 200;
+}
+
+h1{
+	width: 30%;
+	height: 12vh;
+	min-width: 250px;
+	background-image: url("../res/breathe-logo.svg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	display: block;
+	font-family: "Raleway";
+	font-weight: 100;
+	text-transform: uppercase;
+	letter-spacing: 15px;
+	text-align: center;
+	margin: 4vw auto 2vw auto;
+	text-indent: -9999px;
+}
+
+#start_instructions, #gameId, #subtitles_box{
+	width: 40%;
+	margin: 0 auto;
+}
+
+#start_instructions{
+	text-align: center;
+	font-size: 1em;
+}
+
+#subtitles{
+	line-height: 160%;
+	font-style: italic;
+	font-size: 1em,
+}
+
+#gameCanvas{
+	display: block;
+	margin: 3vh auto;
+}
+
+@media only screen and (max-width: 1000px){
+	#start_instructions, #gameId, #subtitles_box{
+		width: 60%;
+	}
+}
+
+@media only screen and (max-width: 700px){
+	#start_instructions, #gameId, #subtitles_box{
+		width: 70%;
+	}
+}
+
+@media only screen and (max-width: 600px){
+	#start_instructions, #gameId, #subtitles_box{
+		width: 90%;
+	}
 }
