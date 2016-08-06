@@ -18,15 +18,21 @@ var Breathing = function() {
     this.threshold_can_press = 0.1;
     this.threshold_can_release = 0.9;
     this.timing_discomfort = 0;
-    this.timing_discomfort_step = 0.3;
+    this.timing_discomfort_step = 0.6;
     this.timing_discomfort_out_speed = 0.1;
 
+    // sounds
     this.snd_breath_i = new Howl({
         src: ['res/breath_in2.ogg']
     });
-
     this.snd_breath_o = new Howl({
         src: ['res/breath_out.ogg']
+    });
+    this.snd_cough_light = new Howl({
+        src: ['res/cough_light.ogg']
+    });
+    this.snd_cough_heavy = new Howl({
+        src: ['res/cough_heavy.ogg']
     });
 
 };
@@ -38,77 +44,112 @@ Breathing.states = {
 
 Breathing.prototype.update = function(ds, keysPressed) {
     // breathe with button
-    if (keysPressed.has(66) /* B */) {
-        if (this.state == Breathing.states.OUT) {
-            this.snd_breath_i.play();
-            this.snd_breath_o.stop();
-            this.state = Breathing.states.IN;
-            if (this.current > this.threshold_can_press) {
-                this.timing_discomfort += this.timing_discomfort_step;
+
+    if (! this.is_coughing()) {
+
+        if (keysPressed.has(66) /* B */) {
+            if (this.state == Breathing.states.OUT) {
+                this.snd_breath_o.stop();
+                this.state = Breathing.states.IN;
+                if (this.current > this.threshold_can_press) {
+                    this.timing_discomfort += this.timing_discomfort_step;
+                }
+            }
+            this.current += this.in_speed * ds;
+            this.current = Math.min(1.4, this.current);
+            if (! this.snd_breath_i.playing() && this.current < 1) {
+                this.snd_breath_i.play();
+            }
+        } else {
+            if (this.state == Breathing.states.IN) {
+                this.snd_breath_i.stop();
+                this.state = Breathing.states.OUT;
+                if (this.current < this.threshold_can_release) {
+                    this.timing_discomfort += this.timing_discomfort_step;
+                }
+            }
+            this.current -= this.out_speed * ds;
+            this.current = Math.max(0, this.current);
+            if (! this.snd_breath_o.playing() && this.current > 0) {
+                this.snd_breath_o.play();
             }
         }
-        this.current += this.in_speed * ds;
-    } else {
-        if (this.state == Breathing.states.IN) {
-            this.snd_breath_o.play();
-            this.snd_breath_i.stop();
-            this.state = Breathing.states.OUT;
-            if (this.current < this.threshold_can_release) {
-                this.timing_discomfort += this.timing_discomfort_step;
-            }
+
+        // coughing
+        if (this.total_discomfort() > 2.1) {
+            this.cough();
         }
-        this.current -= this.out_speed * ds;
-        this.current = Math.max(0, this.current);
-    }
 
-    // out of breath
-    if (this.current == 0) {
-        this.out_of_breath += this.out_of_breath_in_speed * ds;
-    } else if (this.out_of_breath > 0) {
-        this.out_of_breath = Math.max(0, this.out_of_breath - this.out_of_breath_out_speed * ds);
-    }
+        // out of breath
+        if (this.current == 0) {
+            this.out_of_breath += this.out_of_breath_in_speed * ds;
+        } else if (this.out_of_breath > 0) {
+            this.out_of_breath = Math.max(0, this.out_of_breath - this.out_of_breath_out_speed * ds);
+        }
 
-    // hyperventilation
-    if (this.current > 1) {
-        this.hyperventilation += this.hyperventilation_in_speed * ds;
-    } else if (this.hyperventilation > 0) {
-        this.hyperventilation = Math.max(0, this.hyperventilation - this.hyperventilation_out_speed * ds);
-    }
+        // hyperventilation
+        if (this.current > 1) {
+            this.hyperventilation += this.hyperventilation_in_speed * ds;
+        } else if (this.hyperventilation > 0) {
+            this.hyperventilation = Math.max(0, this.hyperventilation - this.hyperventilation_out_speed * ds);
+        }
 
-    // discomfort cooldown
-    if (this.timing_discomfort > 0) {
-        this.timing_discomfort -= this.timing_discomfort_out_speed * ds;
-        this.timing_discomfort = Math.max(0, this.timing_discomfort);
+        // discomfort cooldown
+        if (this.timing_discomfort > 0) {
+            this.timing_discomfort -= this.timing_discomfort_out_speed * ds;
+            this.timing_discomfort = Math.max(0, this.timing_discomfort);
+        }
     }
-
 }
 
+Breathing.prototype.total_discomfort = function() {
+    return this.out_of_breath + this.hyperventilation + this.timing_discomfort;
+};
+
+Breathing.prototype.is_coughing = function() {
+    return (this.snd_cough_light.playing() || this.snd_cough_heavy.playing());
+};
+
+Breathing.prototype.cough = function() {
+    this.snd_breath_i.stop();
+    this.snd_breath_o.stop();
+    var snd_cough = null;
+    // choose light or heavy cough
+    if (Math.random() > 0.5) {
+        snd_cough = this.snd_cough_light;
+    } else {
+        snd_cough = this.snd_cough_heavy;
+    }
+    snd_cough.play();
+    this.out_of_breath = 0;
+    this.hyperventilation = 0;
+    this.timing_discomfort = 0;
+    this.current = 0;
+};
+
 Breathing.prototype.draw = function(ctx) {
+    var breath_circle_size = 0.7 * scrMinSize() / 2;
     // helper circle outline
     ctx.beginPath();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgb(230,230,230)";
-    ctx.arc(0, 0, 0.7 * scrMinSize() / 2, 0, 2 * Math.PI);
+    ctx.globalAlpha = 0.8;
+    ctx.strokeStyle = "white";
+    ctx.arc(0, 0, breath_circle_size, 0, 2 * Math.PI);
     ctx.stroke();
 
     // helper circle jauge
     var factor = this.current
-    var save_glob_alpha = ctx.globalAlpha;
-    ctx.globalAlpha = 0.5 + factor / 2;
     ctx.beginPath();
+    var jauge_size = factor * breath_circle_size;
+    ctx.globalAlpha = 0.5;
     ctx.fillStyle = "white";
-    ctx.arc(0, 0, factor * 0.7 * scrMinSize() / 2, 0, 2 * Math.PI);
+    ctx.arc(0, 0, jauge_size, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.globalAlpha = save_glob_alpha;
-    // hyperventilation stroke
-    if (factor > 1) {
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = "green";
-        if (factor > 1.1) {
-            ctx.strokeStyle = "red";
-        }
-        ctx.stroke();
-    }
+    ctx.beginPath();
+    ctx.globalAlpha = 0.5 + factor / 2;
+    ctx.fillStyle = "white";
+    ctx.arc(0, 0, Math.min(jauge_size, breath_circle_size), 0, 2 * Math.PI);
+    ctx.fill();
 
     // debug jauges
     ctx.beginPath();

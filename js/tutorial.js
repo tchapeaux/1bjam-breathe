@@ -30,6 +30,16 @@ Tutorial.prototype.update = function(ds) {
         }
     }
 
+    // Cough reset tutorial
+    if (game.breathing.is_coughing()) {
+        this.with_instr_empty_cnt = 0;
+        this.with_instr_full_cnt = 0;
+        this.without_instr_empty_cnt = 0;
+        this.without_instr_full_cnt = 0;
+        this.state = Tutorial.states.WITH_INSTR;
+        this.instructions_area.innerHTML = "<p>Hold</p>";
+    }
+
     if (this.state == Tutorial.states.WITH_INSTR) {
         if (this.with_instr_empty_cnt >= 3) {
             console.log("WITHOUT NOW");
