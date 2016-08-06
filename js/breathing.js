@@ -17,9 +17,9 @@ var Breathing = function() {
     // threshold -- when is it ok to switch breath direction (in/out)
     this.threshold_can_press = 0.1;
     this.threshold_can_release = 0.9;
-    this.timing_inconfort = 0;
-    this.timing_inconfort_step = 0.3;
-    this.timing_inconfort_out_speed = 0.1;
+    this.timing_discomfort = 0;
+    this.timing_discomfort_step = 0.3;
+    this.timing_discomfort_out_speed = 0.1;
 
     this.snd_breath_i = new Howl({
         src: ['res/breath_in2.ogg']
@@ -43,7 +43,7 @@ Breathing.prototype.update = function(ds, keysPressed) {
             this.snd_breath_i.play();
             this.state = Breathing.states.IN;
             if (this.current > this.threshold_can_press) {
-                this.timing_inconfort += this.timing_inconfort_step;
+                this.timing_discomfort += this.timing_discomfort_step;
             }
         }
         this.current += this.in_speed * ds;
@@ -52,7 +52,7 @@ Breathing.prototype.update = function(ds, keysPressed) {
             this.snd_breath_o.play();
             this.state = Breathing.states.OUT;
             if (this.current < this.threshold_can_release) {
-                this.timing_inconfort += this.timing_inconfort_step;
+                this.timing_discomfort += this.timing_discomfort_step;
             }
         }
         this.current -= this.out_speed * ds;
@@ -73,10 +73,10 @@ Breathing.prototype.update = function(ds, keysPressed) {
         this.hyperventilation = Math.max(0, this.hyperventilation - this.hyperventilation_out_speed * ds);
     }
 
-    // inconfort cooldown
-    if (this.timing_inconfort > 0) {
-        this.timing_inconfort -= this.timing_inconfort_out_speed * ds;
-        this.timing_inconfort = Math.max(0, this.timing_inconfort);
+    // discomfort cooldown
+    if (this.timing_discomfort > 0) {
+        this.timing_discomfort -= this.timing_discomfort_out_speed * ds;
+        this.timing_discomfort = Math.max(0, this.timing_discomfort);
     }
 
 }
@@ -108,6 +108,6 @@ Breathing.prototype.draw = function(ctx) {
     ctx.beginPath();
     ctx.rect(- wScr() / 2 + 10, -hScr() / 2 + 10, this.out_of_breath * 20, 10);
     ctx.rect(- wScr() / 2 + 10, -hScr() / 2 + 30, this.hyperventilation * 20, 10);
-    ctx.rect(- wScr() / 2 + 10, -hScr() / 2 + 50, this.timing_inconfort * 20, 10);
+    ctx.rect(- wScr() / 2 + 10, -hScr() / 2 + 50, this.timing_discomfort * 20, 10);
     ctx.fill();
 }
