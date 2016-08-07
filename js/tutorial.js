@@ -61,9 +61,7 @@ Tutorial.prototype.update = function(ds) {
     } else if (this.state == Tutorial.states.WITHOUT_INSTR) {
         if (this.without_instr_empty_cnt >= 3) {
             console.log("ENDING NOW");
-            this.instructions_area.innerHTML = "";
-            this.state = Tutorial.states.ENDING;
-            game.weather.start();
+            this.finish();
         } else if (this.without_instr_empty_cnt < this.without_instr_full_cnt) {
             if (game.breathing.current <= game.breathing.threshold_can_press) {
                 this.without_instr_empty_cnt += 1;
@@ -77,3 +75,11 @@ Tutorial.prototype.update = function(ds) {
         }
     }
 }
+
+Tutorial.prototype.finish = function() {
+    this.instructions_area.style.visibility = "hidden";
+    this.state = Tutorial.states.ENDING;
+    game.state = Game.states.NORMAL_GAME;
+    game.weather.start();
+
+};
