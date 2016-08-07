@@ -146,7 +146,7 @@ Breathing.prototype.draw = function(ctx) {
     ctx.arc(0, 0, jauge_size, 0, 2 * Math.PI);
     ctx.fill();
     ctx.beginPath();
-    ctx.globalAlpha = 0.5 + factor / 2;
+    ctx.globalAlpha = Math.min(1.0,  0.5 + factor / 2);
     ctx.fillStyle = "white";
     ctx.arc(0, 0, Math.min(jauge_size, breath_circle_size), 0, 2 * Math.PI);
     ctx.fill();
