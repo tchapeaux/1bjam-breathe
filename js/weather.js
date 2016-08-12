@@ -13,10 +13,10 @@ var Weather = function() {
 };
 
 Weather.prototype.start = function() {
+    new Easing(game.gui_overlay, "opacity", 0.4, 3, easing.easeInOutCirc);
     this.snd_rain.play();
     this.started = true;
     this.next_thunder_countdown = 3;
-    new Easing(game.gui_overlay, "opacity", 0.4, 3, easing.easeInOutCirc);
 };
 
 Weather.prototype.update = function(ds) {

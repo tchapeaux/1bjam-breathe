@@ -10,7 +10,7 @@ var Easing = function(object_, property_, newval, duration, easingFunction) {
     this.easingFunction = easingFunction;
 
     var rate = 1000 / 30;  // miliseconds
-    var occurences_count = duration / rate;
+    var occurences_count = duration / (rate / 1000);
     this.mini_daemon = new MiniDaemon(this, this.update, rate, occurences_count);
     this.mini_daemon.start();
 };
