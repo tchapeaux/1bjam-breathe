@@ -3,7 +3,6 @@
 "use strict";
 
 var Easing = function(object_, property_, newval, duration, easingFunction) {
-    console.log("instantiation", this);
     this.object_ = object_;
     this.property_ = property_;
     this.oldval = object_[property_];

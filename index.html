@@ -18,10 +18,13 @@
     <script type="text/javascript" src="js/tutorial.js"></script>
     <script type="text/javascript" src="js/weather.js"></script>
     <script type="text/javascript" src="js/touch_converter.js"></script>
+    <script type="text/javascript" src="js/gui_overlay.js"></script>
+    <script type="text/javascript" src="js/easing.js"></script>
     <script type="text/javascript" src="thirdparty/howler/howler.min.js"></script>
     <script type="text/javascript" src="thirdparty/minidaemon.js"></script>
-    <script type="text/javascript" src="js/easing.js"></script>
     <script type="text/javascript" src="thirdparty/easings.js"></script>
+
+    <div><canvas width="100" height="100" id="gui_overlay"></canvas></div> <!-- Handled by JS and CSS) -->
 
     <div id="start_instructions">
         <p>Touch the screen or hold B when ready</p>
@@ -38,6 +41,7 @@
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.oRequestAnimationFrame;
 
         var gameCanvas = document.getElementById("gameCanvas");
+        var gui_overlay = document.getElementById("gui_overlay");
         function wScr() { return gameCanvas.width; }
         function hScr() { return gameCanvas.height; }
         var game = new Game();
@@ -60,6 +64,10 @@
             var ds = (timestamp - oldTimestamp) / 1000;
             ds = Math.max(0, ds);
             ds = Math.min(ds, kMAX_LAG);
+
+            var gui_ctx = gui_overlay.getContext("2d");
+            gui_ctx.canvas.width  = window.innerWidth;
+            gui_ctx.canvas.height = window.innerHeight;
 
             var ctx = gameCanvas.getContext("2d");
 
