@@ -66,6 +66,7 @@ var EventsScript = function(events) {
 EventsScript.prototype.update = function(ds) {
     // start (first call only)
     if (!this.started) {
+        console.log("ah ah ah");
         this.started = true;
         this.events[0].start();
     }
@@ -75,9 +76,12 @@ EventsScript.prototype.update = function(ds) {
 
     // advance to next event if current one is finished
     if (this.events[this.current_event_id].is_finished()) {
-        console.log("Finished event -- now go to", this.current_event_id + 1);
         this.current_event_id += 1;
-        console.log("New event:", this.events[this.current_event_id]);
+        if (this.current_event_id >= this.events.length) {
+            // TODO handle end of script
+            // for now reset it
+            this.current_event_id = 0;
+        }
         this.events[this.current_event_id].start();
     }
 
