@@ -7,7 +7,7 @@ var Tutorial = function() {
     this.without_instr_full_cnt = 0; // full breath-in without instructions
     this.without_instr_empty_cnt = 0; // full breath-out without instructions
 
-    this.instructions_area = document.getElementById("start_instructions")
+    this.instructions_area = document.getElementById("start_instructions");
 };
 
 Tutorial.states = {
@@ -43,18 +43,18 @@ Tutorial.prototype.update = function(ds) {
     if (this.state == Tutorial.states.WITH_INSTR) {
         if (this.with_instr_empty_cnt >= 3) {
             console.log("WITHOUT NOW");
-                this.instructions_area.innerHTML = "<p>Keep going</p>";
+            this.instructions_area.innerHTML = "<p>Keep going</p>";
             this.state = Tutorial.states.WITHOUT_INSTR
         } else if (this.with_instr_empty_cnt < this.with_instr_full_cnt) {
             if (game.breathing.current <= game.breathing.threshold_can_press) {
                 this.with_instr_empty_cnt += 1;
-            this.instructions_area.innerHTML = "<p>Hold</p>";
+                this.instructions_area.innerHTML = "<p>Hold</p>";
                 console.log("ONE EMPTY");
             }
         } else {
             if (game.breathing.current >= game.breathing.threshold_can_release) {
                 this.with_instr_full_cnt += 1;
-            this.instructions_area.innerHTML = "<p>Release</p>";
+                this.instructions_area.innerHTML = "<p>Release</p>";
                 console.log("ONE FULL");
             }
         }

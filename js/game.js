@@ -10,6 +10,7 @@ var Game = function() {
     this.tutorial = new Tutorial();
     this.weather = new Weather();
     this.gui_overlay = new GuiOverlay();
+    this.events_script = new EventsScript(SCRIPT_EVENTS);
 
     this.state = Game.states.TUTORIAL;
 
@@ -29,6 +30,10 @@ Game.prototype.update = function(ds, keysPressed) {
 
     if (this.state === Game.states.TUTORIAL) {
         this.tutorial.update(ds, keysPressed);
+    }
+
+    if (this.state === Game.states.NORMAL_GAME) {
+        this.events_script.update(ds);
     }
 
 };
