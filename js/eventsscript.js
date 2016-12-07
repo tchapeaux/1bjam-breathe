@@ -7,7 +7,7 @@ var EventDialogLine = function(speaker, line, duration) {
 
 EventDialogLine.prototype.start = function() {
     document.getElementById("subtitles").innerHTML = "<p><span class='subtitle_speaker_name'>" + this.speaker + "</span>: <span class='subtitle_dialog'>" + this.line + "</span></p>";
-}
+};
 
 EventDialogLine.prototype.update = function(ds) {
     if (this.display_timer > 0) {
@@ -17,7 +17,7 @@ EventDialogLine.prototype.update = function(ds) {
 
 EventDialogLine.prototype.stop = function() {
     document.getElementById("subtitles").innerHTML = "<p></p>";
-}
+};
 
 EventDialogLine.prototype.is_finished = function() {
     return this.display_timer <= 0;
@@ -27,11 +27,11 @@ var EventPlaySound = function(text_description, duration) {
     this.text_description = text_description;
     this.duration = duration;
     this.display_timer = duration;
-}
+};
 
 EventPlaySound.prototype.start = function() {
     document.getElementById("subtitles").innerHTML = "<p><span class='subtitle_sound_description'>*" + this.text_description + "*</span></p>";
-}
+};
 
 EventPlaySound.prototype.update = function(ds) {
     if (this.display_timer > 0) {
@@ -41,7 +41,7 @@ EventPlaySound.prototype.update = function(ds) {
 
 EventPlaySound.prototype.stop = function() {
     document.getElementById("subtitles").innerHTML = "<p></p>";
-}
+};
 
 EventPlaySound.prototype.is_finished = function() {
     return this.display_timer <= 0;
@@ -50,11 +50,11 @@ EventPlaySound.prototype.is_finished = function() {
 
 var EventSilence = function(duration) {
     this.display_timer = duration;
-}
+};
 
 EventSilence.prototype.start = function() {
     document.getElementById("subtitles").innerHTML = "<p></p>";
-}
+};
 
 EventSilence.prototype.update = function(ds) {
     if (this.display_timer > 0) {
@@ -64,7 +64,7 @@ EventSilence.prototype.update = function(ds) {
 
 EventSilence.prototype.stop = function() {
     document.getElementById("subtitles").innerHTML = "<p></p>";
-}
+};
 
 EventSilence.prototype.is_finished = function() {
     return this.display_timer <= 0;
