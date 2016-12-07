@@ -17,7 +17,11 @@ Tutorial.states = {
     ENDING: 'ENDING'
 };
 
-Tutorial.prototype.update = function(ds) {
+Tutorial.prototype.update = function(ds, keysPressed) {
+    if (keysPressed.has(83) /* S */) {
+        // Skip tutorial
+        this.finish();
+    }
 
     // Starting state handling
     if (this.state == Tutorial.states.STARTING) {
