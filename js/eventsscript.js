@@ -6,7 +6,7 @@ var EventDialogLine = function(speaker, line, duration) {
 };
 
 EventDialogLine.prototype.start = function() {
-    document.getElementById("subtitles").innerHTML = "<p>" + this.speaker + ": " + this.line + "</p>";
+    document.getElementById("subtitles").innerHTML = "<p><span class='subtitle_speaker_name'>" + this.speaker + "</span>: <span class='subtitle_dialog'" + this.line + "</span></p>";
 }
 
 EventDialogLine.prototype.update = function(ds) {
@@ -23,10 +23,6 @@ EventDialogLine.prototype.is_finished = function() {
     return this.display_timer <= 0;
 };
 
-function Silence(duration) {
-    return new EventDialogLine("", "", duration)
-}
-
 var EventPlaySound = function(text_description, duration) {
     this.text_description = text_description;
     this.duration = duration;
@@ -34,13 +30,11 @@ var EventPlaySound = function(text_description, duration) {
 }
 
 EventPlaySound.prototype.start = function() {
-    console.log("ohohoh");
-    document.getElementById("subtitles").innerHTML = "<p><em>*" + this.text_description + "*</em></p>";
+    document.getElementById("subtitles").innerHTML = "<p><span class='subtitle_sound_description'>*" + this.text_description + "*</span></p>";
 }
 
 EventPlaySound.prototype.update = function(ds) {
     if (this.display_timer > 0) {
-        console.log("is playing", this);
         this.display_timer -= ds;
     }
 };
@@ -52,6 +46,12 @@ EventPlaySound.prototype.stop = function() {
 EventPlaySound.prototype.is_finished = function() {
     return this.display_timer <= 0;
 };
+
+function Silence(duration) {
+    return new EventPlaySound("", duration)
+}
+
+
 
 var EventsScript = function(events) {
     this.events = events;
